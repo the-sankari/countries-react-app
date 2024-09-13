@@ -17,7 +17,7 @@ export const countriesSlice = createSlice({
       state.isLoading = action.payload;
     },
     search(state, action) {
-      state.state = action.payload;
+      state.search = action.payload;
     },
   },
   extraReducers() {},
