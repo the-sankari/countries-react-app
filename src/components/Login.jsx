@@ -16,13 +16,9 @@ const Login = () => {
   };
   return (
     <div>
-        <div className="none">
-            Hello {user?.email}
-        </div>
+      <div className="none">Hello {user?.email}</div>
       <input
         type="email"
-        name=""
-        id=""
         value={email}
         onChange={(e) => {
           setEmail(e.target.value);
@@ -31,17 +27,17 @@ const Login = () => {
       />
       <input
         type="password"
-        name=""
-        id=""
         value={password}
         onChange={(e) => {
           setPassword(e.target.value);
         }}
         placeholder="Enter password"
       />
-      <Button onClick={handleLogin}>Register</Button>
+      <Button onClick={handleLogin}>Login</Button>
       <br />
-      <Button onClick={()=>navigate('/register')}>No accont? Register here</Button>
+      <Button onClick={() => navigate("/register")}>
+        No accont? Register here
+      </Button>
     </div>
   );
 };
