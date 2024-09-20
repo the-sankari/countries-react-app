@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./auth/firebase";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import Favourites from "./components/Favourites";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -24,6 +25,7 @@ const App = () => {
             <Route element={<ProtectedRoute user={user} />}>
               <Route path="/countries" element={<Countries />} />
               <Route path="/countries/:single" element={<CountrySingle />} />
+              <Route path="/favourites" element={<Favourites />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </Route>

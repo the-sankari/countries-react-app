@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
+import { clearFavourite } from "../store/favouriteSlice";
+import CountrySingle from "./CountrySingle";
 
 const Favourites = () => {
   const disatch = useDispatch();
@@ -50,6 +52,30 @@ const Favourites = () => {
             />
           </Form>
         </Col>
+      </Row>
+      <Row xs={2} md={3} lg={4} className="g-3">
+        <Button
+          variant="primary"
+          onClick={() => {
+            disatch(clearFavourite());
+          }}
+          Clear
+          Favourites
+        ></Button>
+      </Row>
+      <Row xs={2} md={3} lg={4} className="g-3">
+        {countriesList
+          .filter((country) => {
+            return country.name.official.toLowerCase.includes(
+              search.toLowerCase()
+            );
+          })
+          .map((country) => (
+            <CountrySingle
+              key={country.name.common}
+              country={country}
+            ></CountrySingle>
+          ))}
       </Row>
     </Container>
   );

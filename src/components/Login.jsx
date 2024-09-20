@@ -36,7 +36,7 @@ const Login = () => {
       <Button onClick={handleLogin}>Login</Button>
       <br />
       <Button onClick={() => navigate("/register")}>
-        No accont? Register here
+        No account? Register here
       </Button>
     </div>
   );
