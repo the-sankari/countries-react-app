@@ -14,7 +14,7 @@ const Header = () => {
         expand="md"
         bg="dark"
         variant="dark"
-        className="justify-content-end align-items-center"
+        className="justify-content-end align-items-center fixed-top pt-2"
       >
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

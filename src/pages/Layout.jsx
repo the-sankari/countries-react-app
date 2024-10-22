@@ -14,7 +14,7 @@ const Layout = () => {
         {/* Header Section */}
         <Header />
       </Row>
-      <Row style={{ flex: "1", minHeight: "calc(100vh-69px)" }}>
+      <Row style={{ flex: "1", minHeight: "calc(100vh-69px)", marginTop: "56px", marginBottom:"130px" }}>
         {" "}
         <Outlet />
       </Row>
