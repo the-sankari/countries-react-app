@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Nav, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { auth, logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -8,13 +7,12 @@ const Header = () => {
   const [user] = useAuthState(auth);
 
   return (
-    // <Container fluid className="">
       <Navbar
         collapseOnSelect
         expand="md"
         bg="dark"
         variant="dark"
-        className="justify-content-end align-items-center fixed-top pt-2"
+        className="justify-content-end align-items-center fixed-top p-3"
       >
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -65,7 +63,6 @@ const Header = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    // </Container>
   );
 };
 
