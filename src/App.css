@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar-bg {
+  background-image: linear-gradient(to right, #823604, #f96400);
+  color: #f7f7f7;
+}
