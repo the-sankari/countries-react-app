@@ -8,6 +8,7 @@ const Layout = () => {
   return (
     <Container fluid>
       <Row>
+        {/* Header Section */}
         <Header />
       </Row>
       <Row style={{ flex: "1", minHeight: "calc(100vh-69px)" }}>
