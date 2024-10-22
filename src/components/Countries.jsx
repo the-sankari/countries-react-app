@@ -12,7 +12,6 @@ import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import { search } from "../store/countriesSlice";
-import { LinkContainer } from "react-router-bootstrap";
 import { addFavourite, removeFavourite } from "../store/favouriteSlice";
 import { Link } from "react-router-dom";
 
@@ -22,6 +21,9 @@ const Countries = () => {
   const countries = useSelector((state) => state.countries.countries);
   const isLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector((state) => state.countries.search);
+  const favourites = useSelector((state) => state.favourites.favourites);
+
+  // Consloe dubug to be cleared
   console.log("Countries: where", countries);
   console.log("isLoading: ", isLoading);
 
@@ -103,7 +105,6 @@ const Countries = () => {
                         {country.population.toLocaleString()}
                       </i>
                     </ListGroupItem>
-                    {/* Add 2 additional list items, containing currencies for the country and languages */}
                     <ListGroupItem>
                       <i className="me-2">
                         {Object.values(country.currencies || {})
@@ -113,21 +114,27 @@ const Countries = () => {
                     </ListGroupItem>
                     <ListGroupItem>
                       <i className="me-2">
-                        {Object.values(country.languages || {})}
+                        {Object.values(country.languages || {})
+                          .map((language) => language)
+                          .join(", ") || "No language"}
                       </i>
                     </ListGroupItem>
                   </ListGroup>
                   <Button
-                    variant="primary"
-                    onClick={() => dispatch(addFavourite(country.name.common))}
+                    variant={
+                      favourites.includes(country.name.common)
+                        ? "success"
+                        : "primary"
+                    }
+                    onClick={() => {
+                      if (favourites.includes(country.name.common)) {
+                        dispatch(addFavourite(country.name.common));
+                      }
+                    }}
                   >
-                    Add to Favourite
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => dispatch(removeFavourite(country.name.common))}
-                  >
-                    Remove from Favourite
+                    {favourites.includes(country.name.common)
+                      ? "Remove from Favourite"
+                      : "Add to Favourite"}
                   </Button>
                 </Card.Body>
               </Card>
