@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import { search } from "../store/countriesSlice";
 import { LinkContainer } from "react-router-bootstrap";
-import { addFavourite, removeFavourit } from "../store/favouriteSlice";
+import { addFavourite, removeFavourite } from "../store/favouriteSlice";
 import { Link } from "react-router-dom";
 
 const Countries = () => {
@@ -125,7 +125,7 @@ const Countries = () => {
                   </Button>
                   <Button
                     variant="danger"
-                    onClick={() => dispatch(removeFavourit(country.name.common))}
+                    onClick={() => dispatch(removeFavourite(country.name.common))}
                   >
                     Remove from Favourite
                   </Button>

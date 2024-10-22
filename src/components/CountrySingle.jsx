@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { initializeCountries } from "../services/countriesServices";
 import axios from "axios";
-import {
-  Button,
-  Card,
-  Container,
-  Image,
-  ListGroup,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Col, Container, Image, Row, Spinner } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const CountrySingle = () => {
+const CountrySingle = (props) => {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-
-  // const country = location.state?.country;
-  const country = location.state.country;
+  const country = props.country || location.state.country;
   const [weather, setWeather] = useState("");
   const [isWeatherLoading, setIsWeatherLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -31,80 +18,60 @@ const CountrySingle = () => {
           country.capital
         }&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`
       )
+      .catch((error) => {
+        console.log(error);
+      })
       .then((response) => {
         setWeather(response.data);
         setIsWeatherLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsWeatherLoading(false); // Don't forget to set this to false in case of an error
       });
   }, [country.capital]);
 
-  console.log("Weather:", weather);
-
-  // Handle the loading case first
+  console.log("Weather: ", weather);
 
   if (isWeatherLoading) {
     return (
-      <Button variant="primary" disabled>
+      <Col className="text-center m-5">
         <Spinner
-          as="span"
-          animation="grow"
-          size="sm"
+          animation="border"
           role="status"
-          aria-hidden="true"
-        />
-        Loading...
-      </Button>
+          className="center"
+          variant="info"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Col>
     );
   }
 
-  // Show weather data here (minimum requirements are: Temperature, weather description and an icon)
-
-
-
   return (
-    <Container fluid className="w-50 d-flex justify-content-center ">
-      <Card>
-        <Card.Img
-          variant="top"
-          src={country.flags.svg}
-          alt={country.name.common}
-          className="rounded h-50 "
-          style={{
-            objectFit: "cover",
-            minHeight: "200px",
-            maxHeight: "200px",
-          }}
-        />
-        <Card.Header>
-          <Card.Title>{country.name.common}</Card.Title>
-        </Card.Header>
-        <Card.Body>
-          <Card.Text>
-          </Card.Text>
-          <ListGroup className="list-group-flush">
-            <ListGroup.Item>
-              <h5>Capital: {country.capital}</h5>
-            </ListGroup.Item>
-            <ListGroup.Item>Temperature: {weather.main.temp}</ListGroup.Item>
-            <ListGroup.Item>
-              Feels Like : {weather.main.feels_like}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Weather description: {weather.weather[0].description}
-              <Image
-                src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                roundedCircle
-              />
-            </ListGroup.Item>
-          </ListGroup>
-        </Card.Body>
-        <Button variant="secondary" onClick={() => navigate(-1)}>Go Back</Button>
-      </Card>
+    <Container fluid>
+      <Row>
+        <Col className="mt-5 d-flex justify-content-center">
+          <Image src={country.flags.svg} />
+        </Col>
+        <Col>
+          <h2>{country.name.common}</h2>
+          <h3>{country.capital}</h3>
+
+          <div>
+            <p>
+              Right now it is <strong>{parseInt(weather.main.temp)} </strong>
+              degrees in {country.capital} and {weather.weather[0].description}
+            </p>
+            <Image
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+            />
+          </div>
+          <Button variant="light" onClick={() => navigate("/countries")}>
+            Back to Countries
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
+
+  // Cases we will cover together are: Country capital image
 };
 
 export default CountrySingle;

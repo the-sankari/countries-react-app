@@ -9,7 +9,6 @@ import {
   addDoc,
   collection,
   deleteDoc,
-  doc,
   getDocs,
   getFirestore,
   query,

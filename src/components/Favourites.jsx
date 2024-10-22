@@ -1,52 +1,63 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
-import { clearFavourite } from "../store/favouriteSlice";
+import {
+  clearFavourites,
+  getFavouritesFromSource,
+} from "../store/favouriteSlice";
 import CountrySingle from "./CountrySingle";
 
+// Favourites to be written
 const Favourites = () => {
-  const disatch = useDispatch();
+  const dispatch = useDispatch();
   let countriesList = useSelector((state) => state.countries.countries);
   const [search, setSearch] = useState("");
   const countriesLoading = useSelector((state) => state.countries.isLoading);
-  const favouriteList = useSelector((state) => state.favourites.favourites);
-  const favouriteLoading = useSelector((state) => state.favourites.isLoading);
-  if (favouriteList) {
+  const favouritesList = useSelector((state) => state.favourites.favourites);
+  const favouritesLoading = useSelector((state) => state.favourites.isLoading);
+
+  console.log("favouritesList: ", favouritesList);
+  console.log("countriesList inside favourites: ", countriesList);
+
+  if (Array.isArray(favouritesList) && favouritesList.length > 0) {
     countriesList = countriesList.filter((country) =>
-      favouriteList.includes(country.name.common)
+      favouritesList.includes(country.name.common)
     );
   } else {
     countriesList = [];
   }
 
   useEffect(() => {
-    disatch(initializeCountries());
-  }, [disatch]);
-  if (countriesLoading || favouriteLoading) {
+    dispatch(initializeCountries());
+    dispatch(getFavouritesFromSource());
+  }, [dispatch]);
+
+  if (countriesLoading || favouritesLoading) {
     return (
       <Col className="text-center m-5">
         <Spinner
           animation="border"
           role="status"
           className="center"
-          variant="primary"
+          variant="info"
         >
-          <span className="sr-only">Loading...</span>
+          <span className="visually-hidden">Loading...</span>
         </Spinner>
       </Col>
     );
   }
+
   return (
-    <Container className="fluid">
+    <Container fluid>
       <Row>
-        <Col className="text-center m-5 d-flex justify-content-center">
+        <Col className="mt-5 d-flex justify-content-center">
           <Form>
             <Form.Control
               style={{ width: "18rem" }}
               type="search"
-              placeholder="Search"
               className="me-2"
+              placeholder="Search"
               aria-label="Search"
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -54,27 +65,19 @@ const Favourites = () => {
         </Col>
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
-        <Button
-          variant="primary"
-          onClick={() => {
-            disatch(clearFavourite());
-          }}
-          Clear
-          Favourites
-        ></Button>
+        <Button onClick={() => dispatch(clearFavourites())}>
+          Clear Favourites
+        </Button>
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
         {countriesList
           .filter((country) => {
-            return country.name.official.toLowerCase.includes(
-              search.toLowerCase()
-            );
+            return country.name.official
+              .toLowerCase()
+              .includes(search.toLowerCase());
           })
           .map((country) => (
-            <CountrySingle
-              key={country.name.common}
-              country={country}
-            ></CountrySingle>
+            <CountrySingle key={country.name.common} country={country} />
           ))}
       </Row>
     </Container>
