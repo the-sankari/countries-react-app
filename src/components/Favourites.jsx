@@ -1,3 +1,4 @@
+// Favourites to be written.
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,7 @@ import {
   clearFavourites,
   getFavouritesFromSource,
 } from "../store/favouriteSlice";
-import CountrySingle from "./CountrySingle";
+import CountriesCard from "./CountriesCard";
 
 // Favourites to be written
 const Favourites = () => {
@@ -77,7 +78,7 @@ const Favourites = () => {
               .includes(search.toLowerCase());
           })
           .map((country) => (
-            <CountrySingle key={country.name.common} country={country} />
+            <CountriesCard key={country.name.common} country={country} />
           ))}
       </Row>
     </Container>
