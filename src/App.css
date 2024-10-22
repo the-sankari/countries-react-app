@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
-.navbar-bg{
-    background-color: #333;
+.navbar-bg {
+  background-image: linear-gradient(to right, #823604, #f96400);
+  color: #f7f7f7;
 }
