@@ -8,7 +8,11 @@ const Header = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <Navbar bg="dark" className=" mb-5" variant="dark">
+    <Navbar
+      style={{ marginBottom: "1rem", backgroundColor: "#d0e5ff" }}
+      // bg="light"
+      // variant="light"
+    >
       <Container className="justify-content-end">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -19,12 +23,10 @@ const Header = () => {
             <LinkContainer to="/countries">
               <Nav.Link className="fw-bold">Countries</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/register">
-              <Nav.Link className="fw-bold">Register</Nav.Link>
+            <LinkContainer to="/favourites">
+              <Nav.Link className="fw-bold">Favourites</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/login">
-              <Nav.Link className="fw-bold">Login</Nav.Link>
-            </LinkContainer>
+            {/* Conditionally render Register and Login links */}
             {!user ? (
               <>
                 <LinkContainer to="/register">
@@ -39,13 +41,22 @@ const Header = () => {
                 <Button
                   onClick={logout}
                   className="fw-bold"
-                  variant="outline-light"
-                  size="sm"
+                  style={{
+                    color: "black",
+                    backgroundColor: "#d0e5ff",
+                    border: "none",
+                  }}
                 >
                   Logout
                 </Button>
-                <div className="text-success m-2 ">
-                  Welcome , {user.email.split("@")[0]}
+                <div
+                  style={{
+                    marginLeft: "50rem",
+                    marginTop: "0.5rem",
+                  }}
+                  className="text-success"
+                >
+                  Welcome, {user.email.split("@")[0]}
                 </div>
               </>
             )}
