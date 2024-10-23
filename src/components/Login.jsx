@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, logginWithEmailAndPassword } from "../auth/firebase";
+import { auth, loginWithEmailAndPassword } from "../auth/firebase";
 import FormCard from "./FormCard";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const Login = () => {
   }, [user, navigate]);
 
   const handleLogin = () => {
-    logginWithEmailAndPassword(email, password);
+    loginWithEmailAndPassword(email, password);
   };
 
   const formFields = [

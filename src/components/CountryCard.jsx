@@ -1,9 +1,9 @@
 import { Button, Card, Col, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addFavourite, removeFavourite } from "../store/favouriteSlice";
+import { addFavourite, removeFavourite } from "../store/favouritesSlice";
 
-const CountriesCard = ({ country }) => {
+const CountryCard = ({ country }) => {
   const dispatch = useDispatch();
   const favourites = useSelector((state) => state.favourites.favourites);
   const isFavourite = favourites.includes(country.name.common);
@@ -74,4 +74,4 @@ const CountriesCard = ({ country }) => {
   );
 };
 
-export default CountriesCard;
+export default CountryCard;

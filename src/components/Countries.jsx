@@ -12,21 +12,21 @@ import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import { search } from "../store/countriesSlice";
-import { addFavourite, removeFavourite } from "../store/favouriteSlice";
+import { addFavourite } from "../store/favouritesSlice";
 import { Link } from "react-router-dom";
 
 const Countries = () => {
   const dispatch = useDispatch();
+
   const countries = useSelector((state) => state.countries.countries);
   const isLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector((state) => state.countries.search);
-  const favourites = useSelector((state) => state.favourites.favourites);
+  const favourites = useSelector((state) => state.favourites.favourites); // Add this line
 
   useEffect(() => {
     dispatch(initializeCountries());
   }, [dispatch]);
 
-  // Handle the loading case here first (use Col, and Spinner)
   if (isLoading) {
     return (
       <Col className="text-center m-5">
@@ -42,7 +42,6 @@ const Countries = () => {
     );
   }
 
-  // Handle the received data case here.
   return (
     <Container fluid>
       <Row>
@@ -61,14 +60,13 @@ const Countries = () => {
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
         {countries
-          .filter((country) => {
-            return country.name.common
+          .filter((country) =>
+            country.name.common
               .toLowerCase()
-              .includes(searchInput.toLowerCase());
-          })
+              .includes(searchInput.toLowerCase())
+          )
           .map((country) => (
             <Col className="mt-5" key={country.name.official}>
-              {/* Link will be here */}
               <Card className="h-100">
                 <Link
                   to={`/countries/${country.name.common}`}
@@ -122,18 +120,14 @@ const Countries = () => {
                         : "primary"
                     }
                     onClick={() => {
-                      if (favourites.includes(country.name.common)) {
-                        dispatch(removeFavourite(country.name.common));
-                        console.log("removed");
-                      } else {
+                      if (!favourites.includes(country.name.common)) {
                         dispatch(addFavourite(country.name.common));
-                        console.log("Added");
                       }
                     }}
                   >
                     {favourites.includes(country.name.common)
-                      ? "Remove from Favourite"
-                      : "Add to Favourite"}
+                      ? "Added to Favourite"
+                      : "Add Favourite"}
                   </Button>
                 </Card.Body>
               </Card>

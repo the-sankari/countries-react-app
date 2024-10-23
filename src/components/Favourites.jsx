@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeCountries } from "../services/countriesServices"; // Import the service correctly
+import { initializeCountries } from "../services/countriesServices";
 import {
   clearFavourites,
   getFavouritesFromSource,
-} from "../store/favouriteSlice";
-import CountriesCard from "./CountriesCard";
+} from "../store/favouritesSlice";
+import CountryCard from "./CountryCard";
 
-// Favourites component
 const Favourites = () => {
   const dispatch = useDispatch();
   const countriesList = useSelector((state) => state.countries.countries);
@@ -16,6 +15,7 @@ const Favourites = () => {
   const countriesLoading = useSelector((state) => state.countries.isLoading);
   const favouritesList = useSelector((state) => state.favourites.favourites);
   const favouritesLoading = useSelector((state) => state.favourites.isLoading);
+  const [filteredCountries, setFilteredCountries] = useState([]);
 
   // Fetch countries and favourites on component mount
   useEffect(() => {
@@ -23,6 +23,29 @@ const Favourites = () => {
     dispatch(getFavouritesFromSource());
   }, [dispatch]);
 
+  // Filter countries based on favourites
+  useEffect(() => {
+    if (Array.isArray(favouritesList) && favouritesList.length > 0) {
+      setFilteredCountries(
+        countriesList.filter((country) =>
+          favouritesList.includes(country.name.common)
+        )
+      );
+    } else {
+      setFilteredCountries([]);
+    }
+  }, [favouritesList, countriesList]);
+
+  // Filter and search countries
+  const filteredAndSearchedCountries = filteredCountries.filter((country) => {
+    const searchTerm = search.toLowerCase();
+    return (
+      country.name.official.toLowerCase().includes(searchTerm) ||
+      country.name.common.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  // Show loading spinner if data is still loading
   if (countriesLoading || favouritesLoading) {
     return (
       <Col className="text-center m-5">
@@ -37,14 +60,6 @@ const Favourites = () => {
       </Col>
     );
   }
-
-  // Filter countries based on favourites
-  const filteredCountries =
-    Array.isArray(favouritesList) && favouritesList.length > 0
-      ? countriesList.filter((country) =>
-          favouritesList.includes(country.name.common)
-        )
-      : [];
 
   return (
     <Container fluid>
@@ -63,18 +78,32 @@ const Favourites = () => {
         </Col>
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
-        <Button onClick={() => dispatch(clearFavourites())}>
-          Clear Favourites
-        </Button>
+        <Col className="text-center mt-3">
+          <Button
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure you want to clear your favourites?"
+                )
+              ) {
+                dispatch(clearFavourites());
+              }
+            }}
+          >
+            Clear Favourites
+          </Button>
+        </Col>
       </Row>
-      <Row xs={2} md={3} lg={4} className="g-3">
-        {filteredCountries
-          .filter((country) =>
-            country.name.official.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((country) => (
-            <CountriesCard key={country.name.common} country={country} />
-          ))}
+      <Row xs={2} md={3} lg={4} className="g-3 mt-3">
+        {filteredAndSearchedCountries.length === 0 ? (
+          <Col className="text-center">
+            <p>No favourites found.</p>
+          </Col>
+        ) : (
+          filteredAndSearchedCountries.map((country) => (
+            <CountryCard key={country.name.common} country={country} />
+          ))
+        )}
       </Row>
     </Container>
   );
