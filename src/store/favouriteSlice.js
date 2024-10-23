@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { collection, getDocs, query } from "firebase/firestore";
-import { addFavouriteToFirebase, auth, db } from "../auth/firebase";
+import { addFavouriteToFirebase, auth, db, removeFavouriteFromFirebase } from "../auth/firebase";
 
 const initialState = {
   favourites: [],
@@ -25,7 +25,7 @@ export const favouritesSlice = createSlice({
       );
       const user = auth.currentUser;
       if (user) {
-        removeFavouriteFromFrirebase(user.uid, action.payload);
+        removeFavouriteFromFirebase(user.uid, action.payload);
       }
     },
     getFavourites(state, action) {

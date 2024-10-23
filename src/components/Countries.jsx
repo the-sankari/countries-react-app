@@ -17,15 +17,10 @@ import { Link } from "react-router-dom";
 
 const Countries = () => {
   const dispatch = useDispatch();
-
   const countries = useSelector((state) => state.countries.countries);
   const isLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector((state) => state.countries.search);
   const favourites = useSelector((state) => state.favourites.favourites);
-
-  // Consloe dubug to be cleared
-  console.log("Countries: where", countries);
-  console.log("isLoading: ", isLoading);
 
   useEffect(() => {
     dispatch(initializeCountries());
@@ -128,7 +123,11 @@ const Countries = () => {
                     }
                     onClick={() => {
                       if (favourites.includes(country.name.common)) {
+                        dispatch(removeFavourite(country.name.common));
+                        console.log("removed");
+                      } else {
                         dispatch(addFavourite(country.name.common));
+                        console.log("Added");
                       }
                     }}
                   >
