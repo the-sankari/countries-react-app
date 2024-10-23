@@ -75,7 +75,12 @@ const FormCard = ({
             <p className="text-center">____________ OR _____________</p>
           </Row>
           <Card.Body>
-            <Form>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
               {formFields.map((field, index) => (
                 <Form.Group
                   className="mb-3"
@@ -92,26 +97,25 @@ const FormCard = ({
                   />
                 </Form.Group>
               ))}
+              <Button
+                style={{
+                  padding: "10px 14px",
+                  width: "100%",
+                  fontSize: "1.5rem",
+                }}
+                variant="primary"
+                type="submit"
+              >
+                {buttonText}
+              </Button>
             </Form>
           </Card.Body>
 
-          <Card.Body className="text-center">
-            <Button
-              style={{
-                padding: "10px 14px",
-                width: "100%",
-                fontSize: "1.5rem",
-              }}
-              variant="primary"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              {buttonText}
-            </Button>
+          <Card.Footer className="text-center">
             <p className="text-center mt-3">
               {linkDescription} <Link to={linkTo}>{linkText}</Link>
             </p>
-          </Card.Body>
+          </Card.Footer>
         </Card>
       </Row>
     </Container>

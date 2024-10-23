@@ -41,7 +41,7 @@ const logginWithEmailAndPassword = async (email, password) => {
   }
 };
 
-// Registration 
+// Registration
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -72,43 +72,84 @@ const addFavouriteToFirebase = async (uid, name) => {
   }
 };
 
-// Remove favourite from firebase
-const removeFavouriteFromFirebase = async (uid, name) => {
+// Mange favourite in firebase
+const manageFavouriteInFirebase = async (uid, name) => {
   try {
-    if (!name) {
-      console.error(
-        "Error removing favourite from firebase: Name perameter undefined "
-      );
-      return;
-    }
-    const q = query(
-      collection(db, `users/${uid}/favourite`, where("name", "==", name))
-    );
+    const q = name
+      ? query(
+          collection(db, `users/${uid}/favourites`),
+          where("name", "==", name)
+        )
+      : query(collection(db, `users/${uid}/favourites`));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      deleteDoc(doc.ref);
-      console.log("Favourite  removed from firebase");
-    });
-    console.log("Favourite removed from firebase");
+    const deletePromises = querySnapshot.docs.map((doc) => deleteDoc(doc.ref));
+
+    await Promise.all(deletePromises);
+    console.log(
+      name
+        ? "Favourite removed from firebase "
+        : "Favourites cleared from firebase"
+    );
   } catch (error) {
-    console.log("Error removing favourite from firebase", error);
+    console.log(
+      name
+        ? "Error removing favourite from firebase"
+        : "Error clearing favourite from firebas"
+    );
+    console.error(error);
   }
 };
+// Remove favourite from firebase
+const removeFavouriteFromFirebase = (uid, name) => {
+  manageFavouriteInFirebase(uid, name);
+};
+const clearFavouriteFromFirebase = (uid) => {
+  manageFavouriteInFirebase(uid);
+};
+// const removeFavouriteFromFirebase = async (uid, name) => {
+//   if (!name) {
+//     console.error(
+//       "Error removing favourite from firebase: Name parameter undefined"
+//     );
+//     return;
+//   }
+//   try {
+//     const q = query(
+//       collection(db, `users/${uid}/favourites`),
+//       where("name", "==", name)
+//     );
+
+//     const querySnapshot = await getDocs(q);
+//     // querySnapshot.forEach((doc) => {
+//     //   deleteDoc(doc.ref);
+//     //   console.log("Favourite  removed from firebase");
+//     // });
+//     if (querySnapshot.empty) {
+//       console.log("No matchin documents found for removing");
+//       return;
+//     }
+//     const deltePromises = querySnapshot.docs.map((doc) => deleteDoc(doc.ref));
+//     await Promise.all(deltePromises);
+//     console.log("Favourite removed from firebase");
+//   } catch (error) {
+//     console.error("Error removing favourite from firebase", error);
+//   }
+// };
 
 // Clear favourite from firebase
-const clearFavouriteFromFirebase = async (uid) => {
-  try {
-    const q = query(collection(db, `users/${uid}/favourites`));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      deleteDoc(doc.ref);
-      console.log("Favourites  cleared from firebase");
-    });
-    console.log("Favourites cleared from firebase");
-  } catch (error) {
-    console.log("Error clearing favourite from firebase", error);
-  }
-};
+// const clearFavouriteFromFirebase = async (uid) => {
+//   try {
+//     const q = query(collection(db, `users/${uid}/favourites`));
+//     const querySnapshot = await getDocs(q);
+//     querySnapshot.forEach((doc) => {
+//       deleteDoc(doc.ref);
+//       console.log("Favourites  cleared from firebase");
+//     });
+//     console.log("Favourites cleared from firebase");
+//   } catch (error) {
+//     console.log("Error clearing favourite from firebase", error);
+//   }
+// };
 
 export {
   auth,
@@ -119,4 +160,5 @@ export {
   addFavouriteToFirebase,
   removeFavouriteFromFirebase,
   clearFavouriteFromFirebase,
+  manageFavouriteInFirebase,
 };

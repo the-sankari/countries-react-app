@@ -7,7 +7,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const [loading] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   const handleRegister = () => {
     if (!name) {
@@ -50,11 +50,10 @@ const Register = () => {
     },
   ];
   return (
- 
     <FormCard
       title="Register"
       subTitle="Please enter your details to register"
-      onSubmit={handleRegister}
+      handleSubmit={handleRegister}
       formFields={formFields}
       buttonText="Register"
       linkText="Login here"

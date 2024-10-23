@@ -23,6 +23,10 @@ export const favouritesSlice = createSlice({
       state.favourites = state.favourites.filter(
         (favourite) => favourite !== action.payload
       );
+      const user = auth.currentUser;
+      if (user) {
+        removeFavouriteFromFrirebase(user.uid, action.payload);
+      }
     },
     getFavourites(state, action) {
       state.favourites = action.payload;

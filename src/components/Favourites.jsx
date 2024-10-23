@@ -13,27 +13,37 @@ import CountriesCard from "./CountriesCard";
 const Favourites = () => {
   const dispatch = useDispatch();
   let countriesList = useSelector((state) => state.countries.countries);
-  const [search, setSearch] = useState("");
   const countriesLoading = useSelector((state) => state.countries.isLoading);
   const favouritesList = useSelector((state) => state.favourites.favourites);
   const favouritesLoading = useSelector((state) => state.favourites.isLoading);
+  const [search, setSearch] = useState("");
 
   console.log("favouritesList: ", favouritesList);
   console.log("countriesList inside favourites: ", countriesList);
 
-  if (Array.isArray(favouritesList) && favouritesList.length > 0) {
-    countriesList = countriesList.filter((country) =>
-      favouritesList.includes(country.name.common)
-    );
-  } else {
-    countriesList = [];
-  }
+  // Filter favourite list countries
+  const filteredCountries =
+    Array.isArray(favouritesList) && favouritesList.length > 0
+      ? countriesList.filter((country) =>
+          favouritesList.includes(country.name.common)
+        )
+      : [];
 
+  // if (Array.isArray(favouritesList) && favouritesList.length > 0) {
+  //   countriesList = countriesList.filter((country) =>
+  //     favouritesList.includes(country.name.common)
+  //   );
+  // } else {
+  //   countriesList = [];
+  // }
+
+  // Fetch the data on component mount
   useEffect(() => {
     dispatch(initializeCountries());
     dispatch(getFavouritesFromSource());
   }, [dispatch]);
 
+  // Display loading spinner while data is loading
   if (countriesLoading || favouritesLoading) {
     return (
       <Col className="text-center m-5">
@@ -51,6 +61,7 @@ const Favourites = () => {
 
   return (
     <Container fluid>
+      {/* Search Input bar */}
       <Row>
         <Col className="mt-5 d-flex justify-content-center">
           <Form>
@@ -65,18 +76,20 @@ const Favourites = () => {
           </Form>
         </Col>
       </Row>
-      <Row xs={2} md={3} lg={4} className="g-3">
-        <Button onClick={() => dispatch(clearFavourites())}>
-          Clear Favourites
-        </Button>
+      {/* Clear favourite button */}
+      <Row xs={2} md={3} lg={4} className="g-3 mt-3">
+        <Col className="d-flex justify-content.center">
+          <Button onClick={() => dispatch(clearFavourites())}>
+            Clear Favourites
+          </Button>
+        </Col>
       </Row>
+      {/* Display countries */}
       <Row xs={2} md={3} lg={4} className="g-3">
-        {countriesList
-          .filter((country) => {
-            return country.name.official
-              .toLowerCase()
-              .includes(search.toLowerCase());
-          })
+        {filteredCountries
+          .filter((country) =>
+            country.name.official.toLowerCase().includes(search.toLowerCase())
+          )
           .map((country) => (
             <CountriesCard key={country.name.common} country={country} />
           ))}
