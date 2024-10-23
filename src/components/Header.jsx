@@ -40,6 +40,9 @@ const Header = () => {
           <LinkContainer to="/favourites">
             <Nav.Link className="fw-bold">Favourites</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/about">
+            <Nav.Link className="fw-bold">About</Nav.Link>
+          </LinkContainer>
           {/* Conditionally render Register and Login links */}
           {!user ? (
             <>

@@ -10,6 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./auth/firebase";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Favourites from "./components/Favourites";
+import About from "./components/About";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -20,6 +21,7 @@ const App = () => {
           <Route>
             {/* This is where other routes will go to allow Layout to be visible everywhere */}
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About/>} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route element={<ProtectedRoute user={user} />}>
