@@ -2,13 +2,21 @@ import { Accordion, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../assets/css/home.css";
 import flags from "../assets/img/flags.jpg";
-import registerImage from "../assets/img/registration.jpg"; // Add your register image path
-import loginImage from "../assets/img/login.webp"; // Add your login image path
+import registerImage from "../assets/img/registration.jpg";
+import loginImage from "../assets/img/login.webp";
 import countriesImage from "../assets/img/countries.webp";
 import languages from "../assets/img/languages.webp";
-import favoritesImage from "../assets/img/favourites.png"; // Add your favorites image path
-import weather from "../assets/img/weather.avif"; // Add your favorites image path
+import favoritesImage from "../assets/img/favourites.png";
+import weather from "../assets/img/weather.avif";
+import regions from "../assets/img/regions.png";
+import userDashboard from "../assets/img/user_dashboard.png";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../auth/firebase";
+import ProtectedRoute from "../auth/ProtectedRoute";
+
 const Home = () => {
+  const [user] = useAuthState(auth);
+
   return (
     <Container fluid className="text-center homepage-hero">
       <Row className="justify-content-center mb-4">
@@ -17,7 +25,10 @@ const Home = () => {
             <div className="hero-text">Explore the World</div>
             <div className="hero-btns">
               <p className="hero-text-p">Want to know how?</p>
-              <Link to="/login" className="hero-btn-plan">
+              <Link
+                to={!user ? '/login' : '/countries'}
+                className="hero-btn-plan"
+              >
                 get started
               </Link>
             </div>
@@ -123,7 +134,7 @@ const Home = () => {
                     <Accordion.Body>
                       <Row className="text-center">
                         {/* Feature Cards Inside Accordion */}
-                        <Col md={3}>
+                        <Col md={4}>
                           <Card className="mb-4">
                             <Card.Img
                               variant="top"
@@ -150,7 +161,7 @@ const Home = () => {
                           </Card>
                         </Col>
 
-                        <Col md={3}>
+                        <Col md={4}>
                           <Card className="mb-4">
                             <Card.Img
                               variant="top"
@@ -177,7 +188,7 @@ const Home = () => {
                           </Card>
                         </Col>
 
-                        <Col md={3}>
+                        <Col md={4}>
                           <Card className="mb-4">
                             <Card.Img
                               variant="top"
@@ -203,7 +214,7 @@ const Home = () => {
                           </Card>
                         </Col>
 
-                        <Col md={3}>
+                        <Col md={4}>
                           <Card className="mb-4">
                             <Card.Img
                               variant="top"
@@ -224,6 +235,60 @@ const Home = () => {
                                 }}
                               >
                                 Easily manage your list of favorite countries.
+                              </Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                        <Col md={4}>
+                          <Card className="mb-4">
+                            <Card.Img
+                              variant="top"
+                              src={regions} // Image for favorites
+                              alt="Favorite Countries"
+                              style={{
+                                width: "100%",
+                                height: "200px",
+                                objectFit: "cover",
+                              }}
+                            />
+                            <Card.Body>
+                              <Card.Title>Discover Regions</Card.Title>
+                              <Card.Text
+                                style={{
+                                  color: "#003366",
+                                  fontStyle: "italic",
+                                }}
+                              >
+                                Take a look of countires according to their
+                                regions.
+                              </Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                        <Col md={4}>
+                          <Card className="mb-4">
+                            <Card.Img
+                              variant="top"
+                              src={userDashboard} // Image for favorites
+                              alt="Favorite Countries"
+                              style={{
+                                width: "100%",
+                                height: "200px",
+                                objectFit: "cover",
+                              }}
+                            />
+                            <Card.Body>
+                              <Card.Title>User Dashboard</Card.Title>
+                              <Card.Text
+                                style={{
+                                  color: "#003366",
+                                  fontStyle: "italic",
+                                }}
+                              >
+                                Manage your profile with different features.
+                                <span className="text-muted">
+                                  (Further improvement)
+                                </span>
                               </Card.Text>
                             </Card.Body>
                           </Card>

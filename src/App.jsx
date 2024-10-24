@@ -11,6 +11,7 @@ import { auth } from "./auth/firebase";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Favourites from "./components/Favourites";
 import About from "./components/About";
+import UserDashboard from "./components/UserDashboard";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -28,6 +29,7 @@ const App = () => {
               <Route path="/countries" element={<Countries />} />
               <Route path="/countries/:single" element={<CountrySingle />} />
               <Route path="/favourites" element={<Favourites />} />
+              <Route path="/user" element={<UserDashboard />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </Route>

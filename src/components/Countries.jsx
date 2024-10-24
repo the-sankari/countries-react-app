@@ -1,5 +1,5 @@
 import { useEffect, useState, useTransition, useMemo } from "react";
-import { Col, Form, Spinner, Tabs, Tab } from "react-bootstrap";
+import { Col, Form, Spinner, Tabs, Tab, Fade, Collapse } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
@@ -102,10 +102,12 @@ const Countries = () => {
       <Tabs
         activeKey={activeKey}
         onSelect={(k) => setActiveKey(k)}
-        className="m-3 text-secondary"
+        className="m-3 "
         fill
+        variant="underline"
+        transition={Collapse}
       >
-        <Tab eventKey="All" title="All Countries">
+        <Tab eventKey="All" title="All Countries" className="text-secondary">
           <PaginationC
             currentPage={currentPage}
             totalPages={totalPages}

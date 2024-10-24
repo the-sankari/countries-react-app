@@ -59,7 +59,6 @@ const logout = () => {
   signOut(auth);
 };
 
-
 const addFavouriteToFirebase = async (uid, name) => {
   try {
     await addDoc(collection(db, `users/${uid}/favourites`), { name });
