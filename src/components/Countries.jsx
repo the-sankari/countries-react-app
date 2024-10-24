@@ -1,22 +1,15 @@
 import { useEffect, useState, useTransition, useMemo } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Spinner,
-  Tabs,
-  Tab,
-} from "react-bootstrap";
+import { Col, Form, Spinner, Tabs, Tab } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import { search } from "../store/countriesSlice";
 import { addFavourite } from "../store/favouritesSlice";
-import { Link } from "react-router-dom";
 import { debounce } from "lodash";
 import PaginationC from "./PaginationC";
 import RegionTab from "./RegionTab";
+
+import CountryCard from "./CountryCard";
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -27,9 +20,9 @@ const Countries = () => {
   const isLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector((state) => state.countries.search);
   const favourites = useSelector((state) => state.favourites.favourites);
-  
+
   const [isPending, startTransition] = useTransition();
-  const [activeKey, setActiveKey] = useState('All');
+  const [activeKey, setActiveKey] = useState("All");
 
   useEffect(() => {
     dispatch(initializeCountries());
@@ -37,10 +30,11 @@ const Countries = () => {
 
   // Debounce search handler
   const handleSearchChange = useMemo(
-    () => debounce((value) => {
-      dispatch(search(value));
-      setCurrentPage(1);
-    }, 300),
+    () =>
+      debounce((value) => {
+        dispatch(search(value));
+        setCurrentPage(1);
+      }, 300),
     [dispatch]
   );
 
@@ -48,10 +42,12 @@ const Countries = () => {
     handleSearchChange(e.target.value);
   };
 
-  const filteredCountries = useMemo(() => 
-    countries.filter((country) =>
-      country.name.common.toLowerCase().includes(searchInput.toLowerCase())
-    ), [countries, searchInput]
+  const filteredCountries = useMemo(
+    () =>
+      countries.filter((country) =>
+        country.name.common.toLowerCase().includes(searchInput.toLowerCase())
+      ),
+    [countries, searchInput]
   );
 
   const indexOfLastCountry = currentPage * countriesPerPage;
@@ -84,7 +80,7 @@ const Countries = () => {
   }
 
   // Group countries by region
-  const regions = [...new Set(countries.map(country => country.region))];
+  const regions = [...new Set(countries.map((country) => country.region))];
 
   return (
     <Container fluid className="pt-5 ">
@@ -103,8 +99,12 @@ const Countries = () => {
           </Form>
         </Col>
       </Row>
-
-      <Tabs activeKey={activeKey} onSelect={(k) => setActiveKey(k)} className="mb-3">
+      <Tabs
+        activeKey={activeKey}
+        onSelect={(k) => setActiveKey(k)}
+        className="m-3 text-secondary"
+        fill
+      >
         <Tab eventKey="All" title="All Countries">
           <PaginationC
             currentPage={currentPage}
@@ -114,47 +114,8 @@ const Countries = () => {
           <Row xs={2} md={3} lg={4} className="g-3">
             {currentCountries.length > 0 ? (
               currentCountries.map((country) => (
-                <Col className="mt-5" key={country.name.official}>
-                  <Card className="h-100">
-                    <Link
-                      to={`/countries/${country.name.common}`}
-                      state={{ country }}
-                    >
-                      <Card.Img
-                        variant="top"
-                        src={country.flags.svg}
-                        alt={country.name.common}
-                        className="rounded h-50"
-                        style={{
-                          objectFit: "cover",
-                          minHeight: "200px",
-                          maxHeight: "200px",
-                        }}
-                      />
-                    </Link>
-                    <Card.Body className="d-flex flex-column">
-                      <Card.Title>{country.name.common}</Card.Title>
-                      <Card.Subtitle className="mb-5 text-muted">
-                        {country.name.official}
-                      </Card.Subtitle>
-                      <Button
-                        variant={
-                          favourites.includes(country.name.common)
-                            ? "success"
-                            : "primary"
-                        }
-                        onClick={() => {
-                          if (!favourites.includes(country.name.common)) {
-                            dispatch(addFavourite(country.name.common));
-                          }
-                        }}
-                      >
-                        {favourites.includes(country.name.common)
-                          ? "Added to Favourite"
-                          : "Add Favourite"}
-                      </Button>
-                    </Card.Body>
-                  </Card>
+                <Col className="mt-1" key={country.name.official}>
+                  <CountryCard key={country.name.official} country={country} />
                 </Col>
               ))
             ) : (
@@ -169,12 +130,14 @@ const Countries = () => {
             onPageChange={handlePageChange}
           />
         </Tab>
-        
+
         {regions.map((region) => (
           <Tab eventKey={region} title={region} key={region}>
             <RegionTab
               region={region}
-              countries={countries.filter(country => country.region === region)}
+              countries={countries.filter(
+                (country) => country.region === region
+              )}
               favourites={favourites}
               dispatch={dispatch}
               addFavourite={addFavourite}

@@ -15,13 +15,13 @@ import About from "./components/About";
 const App = () => {
   const [user] = useAuthState(auth);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/countries-react-app">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route>
             {/* This is where other routes will go to allow Layout to be visible everywhere */}
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About/>} />
+            <Route path="/about" element={<About />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route element={<ProtectedRoute user={user} />}>
