@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -14,18 +14,48 @@ import { initializeCountries } from "../services/countriesServices";
 import { search } from "../store/countriesSlice";
 import { addFavourite } from "../store/favouritesSlice";
 import { Link } from "react-router-dom";
+import { debounce } from "lodash";
+import PaginationC from "./PaginationC";
 
 const Countries = () => {
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const countriesPerPage = 8;
 
   const countries = useSelector((state) => state.countries.countries);
   const isLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector((state) => state.countries.search);
-  const favourites = useSelector((state) => state.favourites.favourites); // Add this line
+  const favourites = useSelector((state) => state.favourites.favourites);
 
   useEffect(() => {
     dispatch(initializeCountries());
   }, [dispatch]);
+
+  // Dbounce serach handler
+  const handleSerachChange = debounce((value) => {
+    dispatch(search(value));
+    setCurrentPage(1);
+  }, 300);
+
+  const onSearchInput = (e) => {
+    handleSerachChange(e.target.value);
+  };
+
+  const filteredCountries = countries.filter((country) =>
+    country.name.common.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
+  const indexOfLastCountry = currentPage * countriesPerPage;
+  const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
+  const currentCountries = filteredCountries.slice(
+    indexOfFirstCountry,
+    indexOfLastCountry
+  );
+  const totalPages = Math.ceil(filteredCountries.length / countriesPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   if (isLoading) {
     return (
@@ -53,19 +83,15 @@ const Countries = () => {
               className="me-2"
               placeholder="Search"
               aria-label="Search"
-              onChange={(e) => dispatch(search(e.target.value))}
+              value={searchInput}
+              onChange={onSearchInput}
             />
           </Form>
         </Col>
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
-        {countries
-          .filter((country) =>
-            country.name.common
-              .toLowerCase()
-              .includes(searchInput.toLowerCase())
-          )
-          .map((country) => (
+        {currentCountries.length > 0 ? (
+          currentCountries.map((country) => (
             <Col className="mt-5" key={country.name.official}>
               <Card className="h-100">
                 <Link
@@ -132,8 +158,18 @@ const Countries = () => {
                 </Card.Body>
               </Card>
             </Col>
-          ))}
+          ))
+        ) : (
+          <Col>
+            <p>No Countries found</p>
+          </Col>
+        )}
       </Row>
+      <PaginationC
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </Container>
   );
 };
