@@ -29,7 +29,7 @@ const PaginationC = ({ currentPage, totalPages, onPageChange }) => {
   const visiblePages = getPaginationItems();
 
   return (
-    <Pagination className="justify-content-center mt-4">
+    <Pagination className="justify-content-center mt-4" size="sm">
       <Pagination.First
         onClick={() => handlePageChange(1)}
         disabled={currentPage === 1}
@@ -55,6 +55,7 @@ const PaginationC = ({ currentPage, totalPages, onPageChange }) => {
       <Pagination.Last
         onClick={() => handlePageChange(totalPages)}
         disabled={currentPage === totalPages}
+        
       />
     </Pagination>
   );
