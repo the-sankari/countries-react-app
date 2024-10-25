@@ -18,10 +18,10 @@
 }
 
 video {
-    object-fit: contain;
-    overflow-clip-margin: content-box;
-    overflow: clip;
-    max-width: 100%;
+  object-fit: contain;
+  overflow-clip-margin: content-box;
+  overflow: clip;
+  max-width: 100%;
 }
 .hero-video--overlay {
   position: absolute;
@@ -81,5 +81,20 @@ video {
 
 .hero-text-p {
   font-size: 2rem;
+  color: #fff;
+}
+
+.tooltip-button a {
+  text-decoration: none;
+  color: rgba(148, 15, 15, 0.74);
+  transition: all 0s ease-in-out;
+}
+
+.tooltip-button:hover {
+  background-color: rgba(148, 15, 15, 0.74);
+  content: "Hello";
+}
+
+.tooltip-button a:hover {
   color: #fff;
 }

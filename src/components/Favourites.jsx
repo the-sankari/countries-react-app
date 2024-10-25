@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import {
@@ -7,8 +15,14 @@ import {
   getFavouritesFromSource,
 } from "../store/favouritesSlice";
 import CountryCard from "./CountryCard";
+import RemoveFavouriteModal from "./RemoveFavouriteModal";
+import ToolTip from "./ToolTip";
+import oopsImg from "../assets/img/oops.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Favourites = () => {
+  const [show, setShow] = useState(false);
+
   const dispatch = useDispatch();
   const countriesList = useSelector((state) => state.countries.countries);
   const [search, setSearch] = useState("");
@@ -16,7 +30,6 @@ const Favourites = () => {
   const favouritesList = useSelector((state) => state.favourites.favourites);
   const favouritesLoading = useSelector((state) => state.favourites.isLoading);
   const [filteredCountries, setFilteredCountries] = useState([]);
-
   // Fetch countries and favourites on component mount
   useEffect(() => {
     dispatch(initializeCountries());
@@ -44,6 +57,18 @@ const Favourites = () => {
       country.name.common.toLowerCase().includes(searchTerm)
     );
   });
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleClearFavourites = () => {
+    try {
+      dispatch(clearFavourites());
+      handleClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Show loading spinner if data is still loading
   if (countriesLoading || favouritesLoading) {
@@ -77,33 +102,51 @@ const Favourites = () => {
           </Form>
         </Col>
       </Row>
-      <Row xs={2} md={3} lg={4} className="g-3">
-        <Col className="text-center mt-3">
-          <Button
-            onClick={() => {
-              if (
-                window.confirm(
-                  "Are you sure you want to clear your favourites?"
-                )
-              ) {
-                dispatch(clearFavourites());
-              }
-            }}
-          >
-            Clear Favourites
-          </Button>
-        </Col>
-      </Row>
-      <Row xs={2} md={3} lg={4} className="g-3 mt-3">
+
+      <Row xs={2} md={3} lg={4} className="g-3 mt-3 justify-content-center">
         {filteredAndSearchedCountries.length === 0 ? (
           <Col className="text-center">
-            <p>No favourites found.</p>
+            <Card>
+              <Card.Img variant="top" src={oopsImg} />
+              <Card.Body>
+                <Card.Title>No favourites found</Card.Title>
+                <Card.Text>
+                  You can add favourites by browsing countries from{" "}
+                  <Link to="/countries">here</Link>
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </Col>
         ) : (
           filteredAndSearchedCountries.map((country) => (
             <CountryCard key={country.name.common} country={country} />
           ))
         )}
+      </Row>
+      <Row xs={2} md={3} lg={4} className="g-3 mt-5 justify-content-center">
+        <Col className="text-center mt-3">
+          <Button
+            variant="outline-danger"
+            onClick={() => {
+              if (favouritesList.length !== 0) {
+                handleShow();
+              } else {
+                <ToolTip />;
+                console.log("Tool tip clicked");
+              }
+            }}
+            className="tooltip-button"
+          >
+            Clear Favourites
+          </Button>
+        </Col>
+        <RemoveFavouriteModal
+          show={show}
+          title="Clear Favourites?"
+          messege={`You are about to clear all. Do you want?`}
+          handleClose={handleClose}
+          handleRemoveFavourite={handleClearFavourites}
+        />
       </Row>
     </Container>
   );

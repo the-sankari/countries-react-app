@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Button,
   Card,
@@ -11,12 +12,19 @@ import { addFavourite, removeFavourite } from "../store/favouritesSlice";
 import { HiLanguage } from "react-icons/hi2";
 import { FcCurrencyExchange } from "react-icons/fc";
 import { IoIosPeople } from "react-icons/io";
+import { useState } from "react";
+import RemoveFavouriteModal from "./RemoveFavouriteModal";
 
 const CountryCard = ({ country }) => {
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const favourites = useSelector((state) => state.favourites.favourites);
   const isFavourite = favourites.includes(country.name.common);
-
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const handleRemoveFavourite = () => {
+    dispatch(removeFavourite(country.name.common));
+  };
   return (
     <CardGroup className="mt-5" key={country.name.official}>
       <Card className="h-100">
@@ -79,7 +87,7 @@ const CountryCard = ({ country }) => {
             variant={isFavourite ? "outline-danger" : "outline-secondary"}
             onClick={() => {
               if (isFavourite) {
-                dispatch(removeFavourite(country.name.common)); // Remove from favourites
+                handleShow();
               } else {
                 dispatch(addFavourite(country.name.common)); // Add to favourites
               }
@@ -87,6 +95,13 @@ const CountryCard = ({ country }) => {
           >
             {isFavourite ? "Remove Favourite" : "Add Favourite"}
           </Button>
+          <RemoveFavouriteModal
+            show={show}
+            title="Remove Favourite?"
+            messege={`You are about to remove ${country.name.common}. Do you want?`}
+            handleClose={handleClose}
+            handleRemoveFavourite={handleRemoveFavourite}
+          />
         </Card.Footer>
       </Card>
     </CardGroup>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useTransition, useMemo } from "react";
-import { Col, Form, Spinner, Tabs, Tab, Fade, Collapse } from "react-bootstrap";
+import { Col, Form, Spinner, Tabs, Tab, Collapse } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
