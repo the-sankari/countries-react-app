@@ -1,21 +1,23 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom"; 
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import errorImg from "../assets/img/error.jpg";
 const ErrorPage = () => {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center text-center">
-        <Col md={6}>
-          <h1 style={{ fontSize: "5rem", color: "#dc3545" }}>404</h1>
-          <h2>This page does not exist!</h2>
-          <p>
-            The page you are looking for might have been removed or is
-            temporarily unavailable.
-          </p>
-          <Link to="/">
-            <Button variant="primary" size="lg" className="mt-3">
-              Go Back Home
-            </Button>
-          </Link>
+        <Col md={8}>
+          <Card>
+            <Card.Img variant="top" src={errorImg} />
+            <Card.Body>
+              <h1 className="text-danger">404 Error</h1>
+              <p className="text-muted">Page Not Found</p>
+              <Link to="/">
+                <Button variant="primary" md={3} className="sm">
+                  Go Back Home
+                </Button>
+              </Link>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

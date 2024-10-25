@@ -26,7 +26,7 @@ const Home = () => {
             <div className="hero-btns">
               <p className="hero-text-p">Want to know how?</p>
               <Link
-                to={!user ? '/login' : '/countries'}
+                to={!user ? "/login" : "/countries"}
                 className="hero-btn-plan"
               >
                 get started
@@ -286,9 +286,6 @@ const Home = () => {
                                 }}
                               >
                                 Manage your profile with different features.
-                                <span className="text-muted">
-                                  (Further improvement)
-                                </span>
                               </Card.Text>
                             </Card.Body>
                           </Card>
