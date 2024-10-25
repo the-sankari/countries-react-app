@@ -36,8 +36,9 @@ const UserDashboard = () => {
             <Card.Body>
               <Card.Img
                 style={{
-                  width: "50%",
+                  width: "30%",
                   padding: "5px",
+                  margin: "10px",
                   boxShadow: "0 0 5px 0 #444",
                   borderRadius: "50%",
                 }}
@@ -46,7 +47,10 @@ const UserDashboard = () => {
                 alt="User Profile Picture"
               />
               <Card.Title>
-                Welcome, {user.name || user.email.split("@")[0].toUpperCase()}
+                Welcome,{" "}
+                <strong >
+                  {user.name || user.email.split("@")[0].toUpperCase()}
+                </strong>
               </Card.Title>
               <ListGroup>
                 <ListGroup.Item>
@@ -66,70 +70,72 @@ const UserDashboard = () => {
           <Card className="shadow p-3 mb-5 bg-white rounded">
             <Card.Body>
               <Card.Title className="text-center">User Details</Card.Title>
-              <Col md={6}  >
-                <Card>
-                  <Card.Body>
-                    <ListGroup>
-                      <ListGroup.Item>
-                        <strong>Username:</strong> {user.username}
-                      </ListGroup.Item>
+              <Row>
+                <Col md={6}>
+                  <Card>
+                    <Card.Body>
+                      <ListGroup>
+                        <ListGroup.Item>
+                          <strong>Username:</strong>
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>Role:</strong> {user.role}
-                      </ListGroup.Item>
+                        <ListGroup.Item>
+                          <strong>Role:</strong>
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>Verified:</strong>{" "}
-                        {user.emailVerified ? "Yes" : "No"}
-                      </ListGroup.Item>
+                        <ListGroup.Item>
+                          <strong>Verified:</strong>
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>Blocked:</strong> {user.blocked ? "Yes" : "No"}
-                      </ListGroup.Item>
+                        <ListGroup.Item>
+                          <strong>Blocked:</strong>
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>
-                          <Link style={{ color: "ButtonText" }}>Setting</Link>
-                        </strong>{" "}
-                        <Link></Link>
-                      </ListGroup.Item>
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={6}  >
-                <Card>
-                  <Card.Body>
-                    <ListGroup>
-                      <ListGroup.Item>
-                        <strong>Username:</strong> {user.username}
-                      </ListGroup.Item>
+                        <ListGroup.Item>
+                          <strong>
+                            <Link style={{ color: "ButtonText" }}>Setting</Link>
+                          </strong>{" "}
+                          <Link></Link>
+                        </ListGroup.Item>
+                      </ListGroup>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col md={6}>
+                  <Card>
+                    <Card.Body>
+                      <ListGroup>
+                        <ListGroup.Item>
+                          {user.username || "N/A"}
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>Role:</strong> {user.role}
-                      </ListGroup.Item>
+                        <ListGroup.Item>{user.role || "N/A"}</ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>Verified:</strong>{" "}
-                        {user.emailVerified ? "Yes" : "No"}
-                      </ListGroup.Item>
+                        <ListGroup.Item>
+                          {user.emailVerified ? "Yes" : "No"}
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>Blocked:</strong> {user.blocked ? "Yes" : "No"}
-                      </ListGroup.Item>
+                        <ListGroup.Item>
+                          {user.blocked ? "Yes" : "No"}
+                        </ListGroup.Item>
 
-                      <ListGroup.Item>
-                        <strong>
-                          <Link style={{ color: "ButtonText" }}>Setting</Link>
-                        </strong>{" "}
-                        <Link></Link>
-                      </ListGroup.Item>
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
-              </Col>
-              
-
+                        <ListGroup.Item>
+                          <ListGroup.Item>
+                            <Link to="/setting" style={{ color: "ButtonText" }}>
+                              Personal Settings
+                            </Link>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <Link to="/setting" style={{ color: "ButtonText" }}>
+                              Account Settings
+                            </Link>
+                          </ListGroup.Item>
+                        </ListGroup.Item>
+                      </ListGroup>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
             </Card.Body>
           </Card>
         </Col>

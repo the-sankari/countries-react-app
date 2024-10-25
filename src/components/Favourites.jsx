@@ -18,7 +18,7 @@ import CountryCard from "./CountryCard";
 import RemoveFavouriteModal from "./RemoveFavouriteModal";
 import ToolTip from "./ToolTip";
 import oopsImg from "../assets/img/oops.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Favourites = () => {
   const [show, setShow] = useState(false);
@@ -132,7 +132,6 @@ const Favourites = () => {
                 handleShow();
               } else {
                 <ToolTip />;
-                console.log("Tool tip clicked");
               }
             }}
             className="tooltip-button"
