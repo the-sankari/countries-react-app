@@ -1,7 +1,8 @@
 import axios from "axios";
-import { getCountries, isLoading } from "../store/countriesSlice";
+import { getCountries, isLoading, setError } from "../store/countriesSlice";
 
-const baseUrl = "https://restcountries.com/v3.1/all";
+const baseUrl =
+  "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags,cca3,languages,currencies";
 
 const getAllCountries = async () => {
   const response = await axios.get(baseUrl);
@@ -10,12 +11,14 @@ const getAllCountries = async () => {
 
 const initializeCountries = () => {
   return async (dispatch) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    dispatch(isLoading(true)); // Set loading to true at the start
     try {
       const countries = await getAllCountries(); // Await the countries data
       dispatch(getCountries(countries)); // Now you can dispatch the countries data
     } catch (error) {
       console.error("Error fetching countries:", error);
+      dispatch(setError(error.message)); // Dispatch error message
+      dispatch(getCountries([])); // Set empty array on error to avoid undefined
     } finally {
       dispatch(isLoading(false)); // Ensure loading state is updated
     }

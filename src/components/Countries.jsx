@@ -19,6 +19,7 @@ const Countries = () => {
   const countries = useSelector((state) => state.countries.countries);
   const isLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector((state) => state.countries.search);
+  const error = useSelector((state) => state.countries.error);
   const favourites = useSelector((state) => state.favourites.favourites);
 
   const [isPending, startTransition] = useTransition();
@@ -76,6 +77,25 @@ const Countries = () => {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       </Col>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="text-center mt-5">
+        <Row>
+          <Col>
+            <h3 className="text-danger">Error Loading Countries</h3>
+            <p>{error}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => dispatch(initializeCountries())}
+            >
+              Try Again
+            </button>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 
