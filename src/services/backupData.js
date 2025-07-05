@@ -4,7 +4,9 @@ export const backupCountries = [
     name: { common: "United States", official: "United States of America" },
     capital: ["Washington, D.C."],
     region: "Americas",
+    subregion: "Northern America",
     population: 331002651,
+    area: 9372610,
     flags: {
       png: "https://flagcdn.com/w320/us.png",
       svg: "https://flagcdn.com/us.svg",
@@ -12,12 +14,15 @@ export const backupCountries = [
     cca3: "USA",
     languages: { eng: "English" },
     currencies: { USD: { name: "United States dollar", symbol: "$" } },
+    latlng: [38, -97],
   },
   {
     name: { common: "Canada", official: "Canada" },
     capital: ["Ottawa"],
     region: "Americas",
+    subregion: "Northern America",
     population: 38008005,
+    area: 9984670,
     flags: {
       png: "https://flagcdn.com/w320/ca.png",
       svg: "https://flagcdn.com/ca.svg",
@@ -25,6 +30,7 @@ export const backupCountries = [
     cca3: "CAN",
     languages: { eng: "English", fra: "French" },
     currencies: { CAD: { name: "Canadian dollar", symbol: "$" } },
+    latlng: [60, -95],
   },
   {
     name: {
@@ -33,7 +39,9 @@ export const backupCountries = [
     },
     capital: ["London"],
     region: "Europe",
+    subregion: "Northern Europe",
     population: 67886011,
+    area: 242495,
     flags: {
       png: "https://flagcdn.com/w320/gb.png",
       svg: "https://flagcdn.com/gb.svg",
@@ -41,12 +49,15 @@ export const backupCountries = [
     cca3: "GBR",
     languages: { eng: "English" },
     currencies: { GBP: { name: "British pound", symbol: "£" } },
+    latlng: [54, -2],
   },
   {
     name: { common: "Germany", official: "Federal Republic of Germany" },
     capital: ["Berlin"],
     region: "Europe",
+    subregion: "Central Europe",
     population: 83240525,
+    area: 357114,
     flags: {
       png: "https://flagcdn.com/w320/de.png",
       svg: "https://flagcdn.com/de.svg",
@@ -54,12 +65,15 @@ export const backupCountries = [
     cca3: "DEU",
     languages: { deu: "German" },
     currencies: { EUR: { name: "Euro", symbol: "€" } },
+    latlng: [51, 9],
   },
   {
     name: { common: "France", official: "French Republic" },
     capital: ["Paris"],
     region: "Europe",
+    subregion: "Western Europe",
     population: 67391582,
+    area: 643801,
     flags: {
       png: "https://flagcdn.com/w320/fr.png",
       svg: "https://flagcdn.com/fr.svg",
@@ -67,12 +81,15 @@ export const backupCountries = [
     cca3: "FRA",
     languages: { fra: "French" },
     currencies: { EUR: { name: "Euro", symbol: "€" } },
+    latlng: [46, 2],
   },
   {
     name: { common: "Japan", official: "Japan" },
     capital: ["Tokyo"],
     region: "Asia",
+    subregion: "Eastern Asia",
     population: 125836021,
+    area: 377930,
     flags: {
       png: "https://flagcdn.com/w320/jp.png",
       svg: "https://flagcdn.com/jp.svg",
@@ -80,12 +97,15 @@ export const backupCountries = [
     cca3: "JPN",
     languages: { jpn: "Japanese" },
     currencies: { JPY: { name: "Japanese yen", symbol: "¥" } },
+    latlng: [36, 138],
   },
   {
     name: { common: "Australia", official: "Commonwealth of Australia" },
     capital: ["Canberra"],
     region: "Oceania",
+    subregion: "Australia and New Zealand",
     population: 25687041,
+    area: 7692024,
     flags: {
       png: "https://flagcdn.com/w320/au.png",
       svg: "https://flagcdn.com/au.svg",
@@ -93,12 +113,15 @@ export const backupCountries = [
     cca3: "AUS",
     languages: { eng: "English" },
     currencies: { AUD: { name: "Australian dollar", symbol: "$" } },
+    latlng: [-27, 133],
   },
   {
     name: { common: "Brazil", official: "Federative Republic of Brazil" },
     capital: ["Brasília"],
     region: "Americas",
+    subregion: "South America",
     population: 214262622,
+    area: 8515767,
     flags: {
       png: "https://flagcdn.com/w320/br.png",
       svg: "https://flagcdn.com/br.svg",
@@ -106,5 +129,6 @@ export const backupCountries = [
     cca3: "BRA",
     languages: { por: "Portuguese" },
     currencies: { BRL: { name: "Brazilian real", symbol: "R$" } },
+    latlng: [-10, -55],
   },
 ];

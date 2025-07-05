@@ -41,21 +41,21 @@ This project is a React application that allows users to view country informatio
 
 2. Navigate to the project directory:
 
-    ```bash
-    cd Countries_API
-    ```
+   ```bash
+   cd Countries_API
+   ```
 
 3. Install dependencies:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 4. To start development server:
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 ## Configuration
 
@@ -67,20 +67,23 @@ This project is a React application that allows users to view country informatio
 - Configure Firebase in your project.
 
 ## Live Page
+
 Live page can be access here: Will be deployed soon
 
 ## Screenshot
+
 Here are some screenshots of the application:
 
-| Register Page            | Home Page                |
-|--------------------------|--------------------------|
-| ![Register Screenshot](src/assets/register-screenshot.png) | ![Home Screenshot](src/assets/home-screenshot.png) |
+| Register Page                                                   | Home Page                                                   |
+| --------------------------------------------------------------- | ----------------------------------------------------------- |
+| ![Register Screenshot](src/assets/img/screenshots/register.png) | ![Home Screenshot](src/assets/img/screenshots/homepage.png) |
 
-| Countries Page           | Single Country Page      |
-|--------------------------|--------------------------|
-| ![Countries Screenshot](src/assets/countries-screenshot.png) | ![Single Country Screenshot](src/assets/singleCountry-screenshot.png) |
+| Countries Page                                                    | Single Country Page                                                           |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| ![Countries Screenshot](src/assets/img/screenshots/countries.png) | ![Single Country Screenshot](src/assets/img/screenshots/countries-single.png) |
 
 ## Sources
+
 - [React Documentation: Learn more about React](https://react.dev/learn)
 - [Redux Documentation: Understand Redux](https://redux.js.org/introduction/getting-started)
 - [Firebase Documentation: Set up Firebase here](https://firebase.google.com/docs/)
@@ -89,7 +92,6 @@ Here are some screenshots of the application:
 - [Unsplash API: Get images ](https://unsplash.com/documentation)
 
 ## Authors and Acknowledgment
+
 - [GitHub @martin-holland](https://github.com/martin-holland)
 - [GitHub @kajol](https://github.com/the-sankari)
-
-

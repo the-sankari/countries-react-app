@@ -2,9 +2,9 @@ import axios from "axios";
 import { getCountries, isLoading, setError } from "../store/countriesSlice";
 import { backupCountries } from "./backupData";
 
-// Use the stable v2 API with specific fields that work in production
+// Use a different endpoint that works reliably
 const baseUrl =
-  "https://restcountries.com/v2/all?fields=name,capital,region,population,flag,alpha3Code,languages,currencies";
+  "https://restcountries.com/v3.1/independent?status=true&fields=name,capital,region,subregion,population,flags,cca3,languages,currencies,latlng,area";
 
 const getAllCountries = async () => {
   try {
@@ -16,23 +16,8 @@ const getAllCountries = async () => {
       },
     });
 
-    // Transform v2 data to match the expected structure
-    return response.data.map((country) => ({
-      name: {
-        common: country.name,
-        official: country.name,
-      },
-      capital: country.capital ? [country.capital] : [],
-      region: country.region || "Unknown",
-      population: country.population || 0,
-      flags: {
-        png: country.flag || "",
-        svg: country.flag || "",
-      },
-      cca3: country.alpha3Code || "",
-      languages: country.languages || {},
-      currencies: country.currencies || {},
-    }));
+    // The v3.1 API returns data in the correct structure already
+    return response.data;
   } catch (error) {
     console.error("Primary API Error:", error);
 
