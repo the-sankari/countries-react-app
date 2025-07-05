@@ -51,7 +51,7 @@ const Home = () => {
             >
               <source
                 type="video/mp4"
-                src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
+                src="https://cdn.jacadatravel.com/wp-content/uploads/2024/11/Homepage-Jacada-hero-video-2024.mp4"
               />
               {/* Fallback for browsers that don't support video */}
               Your browser does not support the video tag.
