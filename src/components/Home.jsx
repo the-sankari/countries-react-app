@@ -21,7 +21,7 @@ const Home = () => {
     <Container fluid className="text-center homepage-hero">
       <Row className="justify-content-center mb-4">
         <Col className="homepage-hero">
-          <div className="hero-video--overlay ">
+          <div className="hero-video--overlay">
             <div className="hero-text">Explore the World</div>
             <div className="hero-btns">
               <p className="hero-text-p">Want to know how?</p>
@@ -40,12 +40,21 @@ const Home = () => {
               muted
               playsInline
               className="hero-bg-video"
-              poster="https://www.jacadatravel.com/wp-content/uploads/2024/01/Homepage-Header-Frame.jpg"
+              poster="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+              onError={(e) => {
+                console.warn("Video failed to load, using poster image");
+                e.target.style.display = "none";
+                // Show the background image from CSS
+                e.target.parentElement.style.background =
+                  "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat";
+              }}
             >
               <source
                 type="video/mp4"
-                src="https://www.jacadatravel.com/wp-content/uploads/2024/01/Jacada-Homepage-video-global-updated2024.mp4"
+                src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
               />
+              {/* Fallback for browsers that don't support video */}
+              Your browser does not support the video tag.
             </video>
           </div>
         </Col>

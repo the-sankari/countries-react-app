@@ -12,16 +12,26 @@
 }
 .hero-video--wrap {
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   max-width: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Fallback background for when video doesn't load */
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")
+      center/cover no-repeat;
 }
 
-video {
-  object-fit: contain;
-  overflow-clip-margin: content-box;
-  overflow: clip;
-  max-width: 100%;
+.hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 .hero-video--overlay {
   position: absolute;
@@ -30,58 +40,71 @@ video {
   right: 0;
   bottom: 0;
   width: 100%;
-  max-width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 33;
+  z-index: 100; /* Increased z-index to ensure it's always on top */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Slightly darker overlay for better text visibility */
 }
 .hero-text {
-  color: #fffff0;
-  opacity: 0.6;
+  color: #ffffff;
   font-size: 4vw;
   font-weight: bold;
   text-align: center;
   margin: 0 auto;
   padding: 10px;
   width: 70%;
-  text-align: center;
-  mix-blend-mode: screen;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow for better visibility */
+  z-index: 101;
 }
 
 .hero-btns {
-  z-index: 10;
+  z-index: 101;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  a {
-    margin: 10px;
-    color: #111111;
-    text-decoration: none;
-    background-color: #fffff04f;
-    text-align: center;
-    padding: 2px 18px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    transition: all 0.5s;
-    cursor: pointer;
-    mix-blend-mode: screen;
-  }
-  a:hover {
-    color: #fffff0;
-    background-color: #111;
-  }
+}
+
+.hero-btns a {
+  margin: 10px;
+  color: #111111;
+  text-decoration: none;
+  background-color: rgba(255, 255, 240, 0.9);
+  text-align: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-btns a:hover {
+  color: #ffffff;
+  background-color: rgba(17, 17, 17, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .hero-text-p {
   font-size: 2rem;
-  color: #fff;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 1rem;
+  z-index: 101;
 }
 
 .tooltip-button a {
