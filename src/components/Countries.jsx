@@ -80,7 +80,7 @@ const Countries = () => {
     );
   }
 
-  if (error) {
+  if (error && countries.length === 0) {
     return (
       <Container className="text-center mt-5">
         <Row>
@@ -104,6 +104,15 @@ const Countries = () => {
 
   return (
     <Container fluid className="pt-5 ">
+      {error && countries.length > 0 && (
+        <Row>
+          <Col>
+            <div className="alert alert-warning text-center" role="alert">
+              <small>{error}</small>
+            </div>
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col className="mt-5 d-flex justify-content-center">
           <Form>
